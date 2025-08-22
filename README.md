@@ -1,5 +1,7 @@
 # Selenium-Markets
-Data scrapping automation of spanish market stores websites to create enhanced databases
+Data scrapping automation of spanish market stores websites to create enhanced databases <br><br>
+<img width="1866" height="590" alt="Market extraction pipeline" src="https://github.com/user-attachments/assets/4d882f7b-f694-4565-af65-5a048cbac0bc" />
+<br><br>
 
 I'm developing an app to deploy a market shift management tool where each store can CRUD their employees. In order to create a more "real" proyect, i started scrapping all stores from an actual super market. The satisfaction on crafting a database with real information through an automated methodology lead my curiosity to obtain different databases for each supermarket. Store data for each super market chain is variable in obtention and content, so i have tried to standardize each super market database in order to develop a "Super Market Finder" app. I have develop an automation to extract latitude and longitude for each Market store using a Maps app, enhancing location data and allowing to create this finder app.
 
