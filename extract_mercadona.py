@@ -8,7 +8,7 @@ import time, os, random
 import mysql.connector
 from dotenv import load_dotenv
 
-PROVINCIAS = [
+PROVINCES = [
     # ESPAÑA
     "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila",
     "Badajoz", "Barcelona", "Burgos",
@@ -30,13 +30,30 @@ PROVINCIAS = [
 MAX_WAIT = 10
 
 def get_coords(hidden_coords):
+    """Returns latitude and longitude based on an input html element
+
+    Args:
+        hidden_coords (HTML tag): HTML containing latitude and longitude
+    Returns:
+        latitude (float): Latitude of the address
+        longitude (float): Longitude of the address        
+    """
     full_link = str(hidden_coords.get_attribute("href"))
     left_trim = full_link.replace(os.getenv("WEB_MAPS"), "")
     right_trim = left_trim.split("/")[0]
-    latitud, longitud = right_trim.split((","))
-    return float(latitud), float(longitud)
+    latitude, longitude = right_trim.split((","))
+    return float(latitude), float(longitude)
 
 def get_city_info(city_info):
+    """Returns the CP, city and province out of a data input
+
+    Args:
+        city_info (list): Contains all required data as a list
+    Returns:
+        post_code (str): CP of the city
+        city (str): City's name
+        province (str): Province of the city
+    """
     post_code_and_city, province = city_info.split("(")
     province = province.replace(")", "") 
     post_code = post_code_and_city.split(" ")[0]
@@ -48,9 +65,8 @@ def extract_data (driver):
 
     Args:
         driver (selenium.webdriver.Chrome): Driver to inspect the web
-
     Returns:
-        _type_: _description_
+        info (dict): Return the data pairs needed for the DB as a dictionary
     """
     country = str(driver.find_element(
         By.CSS_SELECTOR, ".supermercadoPais").text).lower().capitalize()
@@ -118,7 +134,7 @@ except:
 time.sleep(5)
 
 # Open the search bar and enter city
-for ciudad in PROVINCIAS:
+for ciudad in PROVINCES:
     scroll_into_view_text = driver.find_element(By.CLASS_NAME, "supermercadosTitulo")
     driver.execute_script('arguments[0].scrollIntoView(true);', scroll_into_view_text)
     search_bar = driver.find_element(By.ID, "busquedaInputSuper")
